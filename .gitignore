@@ -110,6 +110,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# My environments
+*.ini
+
 # Spyder project settings
 .spyderproject
 .spyproject
