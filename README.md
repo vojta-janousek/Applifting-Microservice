@@ -1,6 +1,13 @@
 # Applifting-Microservice
 
-Thursday: Setup (30 minutes)
+IMPORTANT:
+
+- Endpoint documentation is in the ENDPOINTS.md file
+- Environment variables are hidden and ignored by git
+- Application uses PostgreSQL
+
+
+Thursday: Project setup
 
 - Created and initialised a GitHub repository
 - Created and configured a Dockerfile
@@ -21,3 +28,11 @@ Thursday: Setup (30 minutes)
 - Changed database from sqlite to postgresql
 - Configured project settings
 - Made migrations to the new database
+
+Friday:
+
+- Created app called 'core'
+- Added tests for wait_for_db functionality (core)
+- Implemented wait_for_db functionality (core)
+
+- Created Product and Offer models (core)
