@@ -35,4 +35,15 @@ Friday:
 - Added tests for wait_for_db functionality (core)
 - Implemented wait_for_db functionality (core)
 
-- Created Product and Offer models (core)
+(core):
+- Added test for a custom user model being created
+- Created a custom user model and a custom user manager
+- Added test for email normalization
+- Implemented email normalization feature
+- Added test for email field validation
+- Implemented email field validation feature
+- Added test for a custom superuser being created
+- Implemented a method for creating superusers
+
+
+- Created Product and Offer models (auction)
