@@ -128,9 +128,9 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'core.User'
 
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
+# STATIC_DIR = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [
+#     STATIC_DIR,
+# ]
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

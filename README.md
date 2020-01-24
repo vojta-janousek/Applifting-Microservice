@@ -5,6 +5,11 @@ IMPORTANT:
 - Endpoint documentation is in the ENDPOINTS.md file
 - Environment variables are hidden and ignored by git
 - Application uses PostgreSQL
+- You can use the following command to run unit tests on core app (or replace with auction):
+
+docker-compose run djangoapp sh -c "python djangoapp/manage.py test core && flake8"
+
+However, you need to comment out the last line in settings.py (heroku settings)
 
 
 Thursday: Project setup
@@ -32,18 +37,21 @@ Thursday: Project setup
 Friday:
 
 - Created app called 'core'
-- Added tests for wait_for_db functionality (core)
+- Added a test for wait_for_db functionality (core)
 - Implemented wait_for_db functionality (core)
 
 (core):
-- Added test for a custom user model being created
+- Added a test for a custom user model being created
 - Created a custom user model and a custom user manager
-- Added test for email normalization
+- Added a test for email normalization
 - Implemented email normalization feature
-- Added test for email field validation
+- Added a test for email field validation
 - Implemented email field validation feature
-- Added test for a custom superuser being created
+- Added a test for a custom superuser being created
 - Implemented a method for creating superusers
+- Added tests for listing, creating and changing users in the admin interface
+- Implemented the above features
 
-
-- Created Product and Offer models (auction)
+(auction):
+- Created Product and Offer models
+- Migrated both models and registered them to the admin interface
