@@ -3,18 +3,32 @@ from rest_framework import serializers
 from auction.models import Product, Offer
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class OfferSerializer(serializers.ModelSerializer):
     '''
-    A serializer for product objects.
+    A serializer for offer object list.
     '''
+
     class Meta:
-        model = Product
-        fields = ('id', 'name', 'description')
+        model = Offer
+        fields = ('id', 'price', 'items_in_stock', 'found_at')
         read_only_fields = ('id',)
 
 
-class OfferSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     '''
-    A serializer for offer objects.
+    A serializer for product object list.
     '''
-    pass
+
+    offers = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Product
+        fields = ('id', 'name', 'description', 'offers',)
+        read_only_fields = ('id',)
+
+
+class ProductDetailSerializer(ProductSerializer):
+    '''
+    A serializer for product object details.
+    '''
+    offers = OfferSerializer(many=True, read_only=True)

@@ -34,13 +34,16 @@ Thursday: Project setup
 - Configured project settings
 - Made migrations to the new database
 
-Friday:
+Friday: Database configuration and creating a custom user model
+
+1) Database configuration
 
 - Created app called 'core'
 - Added a test for wait_for_db functionality (core)
 - Implemented wait_for_db functionality (core)
 
-(core):
+2) Custom user model (core)
+
 - Added a test for a custom user model being created
 - Created a custom user model and a custom user manager
 - Added a test for email normalization
@@ -52,12 +55,15 @@ Friday:
 - Added tests for listing, creating and changing users in the admin interface
 - Implemented the above features
 
-Saturday:
+Saturday: Models, Serialized CRUD Model-Template-View paradigm, User management endpoints
 
-(auction):
+1) Model creation (auction)
+
 - Added tests for the models' string representation
 - Created Product and Offer models
 - Migrated both models and registered them to the admin interface
+
+2) Product creating and retrieving
 
 - Added tests for retrieving products by authorized and unauthorized users
 - Created a product serializer
@@ -68,3 +74,12 @@ Saturday:
 
 - Added tests for creating a new product with valid and invalid payloads
 - Configured product view to include create model feature
+
+- Created tests for displaying a product detail
+- Configured serialized CRUD functionality for product model
+
+- Configured CRUD endpoints via Router
+
+3) User management endpoints
+
+- Created app called 'user'

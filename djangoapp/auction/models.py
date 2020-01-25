@@ -25,7 +25,11 @@ class Offer(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        'Product',
+        related_name='offers',
+        on_delete=models.CASCADE
+    )
     price = models.PositiveIntegerField()
     items_in_stock = models.PositiveIntegerField()
     found_at = models.DateTimeField(auto_now_add=True)
