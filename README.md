@@ -52,6 +52,19 @@ Friday:
 - Added tests for listing, creating and changing users in the admin interface
 - Implemented the above features
 
+Saturday:
+
 (auction):
+- Added tests for the models' string representation
 - Created Product and Offer models
 - Migrated both models and registered them to the admin interface
+
+- Added tests for retrieving products by authorized and unauthorized users
+- Created a product serializer
+- Created a product list view and registered it to the url router
+
+- Added a test for checking that products are limited to their users
+- Configured querysets to filter products by their user
+
+- Added tests for creating a new product with valid and invalid payloads
+- Configured product view to include create model feature
