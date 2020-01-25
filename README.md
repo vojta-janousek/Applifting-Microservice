@@ -63,7 +63,7 @@ Saturday: Models, Serialized CRUD Model-Template-View paradigm, User management 
 - Created Product and Offer models
 - Migrated both models and registered them to the admin interface
 
-2) Product creating and retrieving
+2) Product creating and retrieving (auction)
 
 - Added tests for retrieving products by authorized and unauthorized users
 - Created a product serializer
@@ -80,6 +80,17 @@ Saturday: Models, Serialized CRUD Model-Template-View paradigm, User management 
 
 - Configured CRUD endpoints via Router
 
-3) User management endpoints
+3) User management endpoints (user)
 
 - Created app called 'user'
+- Added tests for successfully creating a new user
+- Added a test creating an existing user to fail
+- Added a test checking if the selected password is longer than 5 characters
+- Created user model serializer and serialized view
+- Assigned url to the view
+
+- Added a test to make sure users always have to be authenticated
+- Added a test to make sure a profile can be retrieved
+- Added a test to make sure post request is not allowed on this urls
+- Added tests to make sure users can update their profiles
+- Created a view for authenticated user management and assigned a url to it
