@@ -94,3 +94,19 @@ Saturday: Models, Serialized CRUD Model-Template-View paradigm, User management 
 - Added a test to make sure post request is not allowed on this urls
 - Added tests to make sure users can update their profiles
 - Created a view for authenticated user management and assigned a url to it
+
+Sunday: Microservice integration analysis
+
+1) Sending requests to Products microservice (auction/commands)
+
+- Added requests package to requirements.txt
+- Added login/logout feature to the browseable API
+- Tested requests for user creation/authentication
+- Tested requests for product CRUD
+
+2) Sending requests to Offers microservice (auction/commands)
+
+- Requested an access token and saved it as an environment variable
+- Registered a test product
+- Tested retrieving all offers for the registered product
+- Tested the number of mutual offers in consecutive get requests

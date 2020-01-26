@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
     Serializer for the users object.
     '''
 
-    class Meta():
+    class Meta:
         model = get_user_model()
         fields = ('email', 'password', 'name')
         extra_kwargs = {
