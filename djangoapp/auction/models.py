@@ -1,6 +1,10 @@
 from django.db import models
 from django.conf import settings
 
+from django.db.models.signals import post_save
+
+from auction.signals import register_product
+
 
 class Product(models.Model):
     '''
@@ -21,18 +25,14 @@ class Offer(models.Model):
     '''
     Each offer represents a product offer being sold for some price somewhere.
     '''
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
     product = models.ForeignKey(
         'Product',
         related_name='offers',
         on_delete=models.CASCADE
     )
+    service_id = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
     items_in_stock = models.PositiveIntegerField()
-    found_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return ('{}: ${} ({} in stock)'.format(
@@ -41,3 +41,6 @@ class Offer(models.Model):
             self.items_in_stock
             )
         )
+
+
+# post_save.connect(register_product, sender=Product)

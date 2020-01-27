@@ -10,7 +10,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     Manage products in the database.
     '''
     permission_classes = (IsAuthenticated,)
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by('id')
     serializer_class = ProductSerializer
 
     def get_queryset(self):

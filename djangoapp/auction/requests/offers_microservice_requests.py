@@ -38,7 +38,7 @@ headers = {
 
 # Retrieve all offers for a single product
 
-offers_url = base_url + '/products/1/offers'
+offers_url = base_url + '/products/206/offers'
 # offer_request = requests.get(url=offers_url, headers=headers)
 
 def compare_ids(url, headers):
@@ -49,7 +49,7 @@ def compare_ids(url, headers):
     first_request = requests.get(url=url, headers=headers)
     first_data = json.loads(first_request.text)
 
-    time.sleep(70)
+    time.sleep(60)
 
     second_request = requests.get(url=url, headers=headers)
     second_data = json.loads(second_request.text)

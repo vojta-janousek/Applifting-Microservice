@@ -1,0 +1,3 @@
+# Fixing an error creating duplicate Pidfiles
+
+celerybeat.pid

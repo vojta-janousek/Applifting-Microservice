@@ -97,16 +97,40 @@ Saturday: Models, Serialized CRUD Model-Template-View paradigm, User management 
 
 Sunday: Microservice integration analysis
 
-1) Sending requests to Products microservice (auction/commands)
+1) Sending requests to Products microservice (auction/requests)
 
 - Added requests package to requirements.txt
 - Added login/logout feature to the browseable API
 - Tested requests for user creation/authentication
 - Tested requests for product CRUD
 
-2) Sending requests to Offers microservice (auction/commands)
+2) Sending requests to Offers microservice (auction/requests)
 
 - Requested an access token and saved it as an environment variable
 - Registered a test product
 - Tested retrieving all offers for the registered product
 - Tested the number of mutual offers in consecutive get requests
+
+Monday: Background job deployment debugging
+
+1) Offer model changes (auction)
+
+- Fixed Offer model to work with incoming data
+- Added tests for the new Offer model
+
+2) Microservice integration
+
+- Created a signal that registers a new product that has been created
+- Tested the signal
+
+- Added Celery and Redis to requirements.txt
+- Built images for both, linked them together, along with db
+- Configured project for Celery, created test tasks
+
+Tuesday:
+
+X) Deployment to Heroku
+
+- Hid the database password
+- Created a Heroku project
+- Found, bought and registered a custom domain to the Heroku project

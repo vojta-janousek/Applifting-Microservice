@@ -25,7 +25,7 @@ class OfferRequestTests(TestCase):
         }
         product_create_request = requests.post(
                                         url=self.url,
-                                        data=self.data,
+                                        data=data,
                                         auth=self.auth
                                         )
         self.product_id = (json.loads(product_create_request.text))['id']
@@ -34,4 +34,16 @@ class OfferRequestTests(TestCase):
         '''
         Test creating a new offer using requests.
         '''
-        pass
+        url = self.url + str(self.product_id) + '/'
+        data = {
+            'service_id': 1,
+            'price': 50,
+            'items_in_stock': 4
+        }
+        offer_create_request = requests.post(
+            url=url,
+            data=data,
+            auth=self.auth
+        )
+
+        self.assertEqual(offer_create_request.status_code, 405)
