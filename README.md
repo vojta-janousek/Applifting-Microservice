@@ -12,7 +12,7 @@ IMPORTANT:
 
 - Environment variables are hidden and ignored by git
 - Application integrates Django, PostgreSQL, Celery and Redis via Docker
-- You can use the following command to run unit tests on chosen <app>:
+- You can use the following command to run unit tests on chosen <app> (auction, core, user):
 
 docker-compose run djangoapp sh -c "python djangoapp/manage.py test <app> && flake8"
 
@@ -70,6 +70,8 @@ Response:
   'id': <id>,
   'name': <name>,
   'description': <description>,
+  'current_average_price': <current_average_price>,
+  'price_percentage_change': <price_percentage_change>,
   'offers': []
 }
 400 BAD REQUEST
@@ -92,6 +94,8 @@ Response:
     'id': <id>,
     'name': <name>,
     'description': <description>,
+    'current_average_price': <current_average_price>,
+    'price_percentage_change': <price_percentage_change>,
     'offers': [
       '<offer.name>: $<offer.price> (<offer.items_in_stock> in stock)',
       .
@@ -118,6 +122,8 @@ Response:
   'id': <product.id>,
   'name': <product.name>,
   'description': <product.description>,
+  'current_average_price': <current_average_price>,
+  'price_percentage_change': <price_percentage_change>,
   'offers': [
     {
       'id': <offer.id>,
@@ -151,6 +157,8 @@ Response:
   'id': <product.id>,
   'name': <product.new_name>,
   'description': <product.new_description>,
+  'current_average_price': <current_average_price>,
+  'price_percentage_change': <price_percentage_change>,
   'offers': [
     {
       'id': <offer.id>,

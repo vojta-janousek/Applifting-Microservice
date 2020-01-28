@@ -109,6 +109,9 @@
 
 - Created a command for updating offers of a selected product
 - Tested and linked the command to celery tasks file
+- Added current average price and price percentage change fields to Product model
+- Added a command to calculate both from old data and new request query
+- Tested the new command
 
 12) Miscellaneous
 

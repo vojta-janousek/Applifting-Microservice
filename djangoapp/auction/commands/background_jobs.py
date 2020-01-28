@@ -2,6 +2,7 @@ import requests
 import json
 
 from decouple import config
+from decimal import Decimal
 
 from auction.models import Product, Offer
 
@@ -25,6 +26,9 @@ def update_product_offers(product_id):
     if (offers_request.status_code == 200):
         product = (Product.objects.filter(id=product_id))[0]
 
+        # Save the old average product price before deletion
+        old_average_price = product.current_average_price
+
         # Deletes all offers of a product whose product_id was given
         Offer.objects.filter(product=product).delete()
 
@@ -36,6 +40,46 @@ def update_product_offers(product_id):
                 price=offer['price'],
                 items_in_stock=offer['items_in_stock']
             )
+
+        # Calculating current average price and price percentage change
+        # for the new requested product offers.
+        new_offers = Offer.objects.filter(product=product)
+
+        # Total number of offered items in all stocks
+        offer_count = 0
+        # Total price of all offers from all shops/stocks
+        offer_total = 0
+        for offer in new_offers:
+            offer_count += offer.items_in_stock
+            offer_total += (offer.price * offer.items_in_stock)
+
+        new_average_price = Decimal(str(round(offer_total / offer_count, 2)))
+
+        if (old_average_price == 0):
+            if (new_average_price > 0):
+                Product.objects.filter(id=product_id).update(
+                    current_average_price=new_average_price,
+                    price_percentage_change=Decimal('100.00')
+                )
+            elif (new_average_price < 0):
+                Product.objects.filter(id=product_id).update(
+                    current_average_price=new_average_price,
+                    price_percentage_change=Decimal('-100.00')
+                )
+            else:
+                Product.objects.filter(id=product_id).update(
+                    current_average_price=Decimal('0.00'),
+                    price_percentage_change=Decimal('0.00')
+                )
+        else:
+            # Price percentage change
+            ppc = (new_average_price - old_average_price) / old_average_price
+
+            Product.objects.filter(id=product_id).update(
+                current_average_price=new_average_price,
+                price_percentage_change=Decimal(str(round(ppc, 2)))
+            )
+
 
 
 if (__name__ == '__main__'):
