@@ -1,8 +1,14 @@
+from django.views.generic import TemplateView
+
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from auction.models import Product
 from auction.serializers import ProductSerializer, ProductDetailSerializer
+
+
+class IndexView(TemplateView):
+    template_name = 'auction/index.html'
 
 
 class ProductViewSet(viewsets.ModelViewSet):

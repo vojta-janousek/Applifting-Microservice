@@ -69,7 +69,7 @@ class PrivateProductAPITests(TestCase):
         Product.objects.create(user=self.user, name='Hummus dip')
 
         response = self.client.get(PRODUCTS_URL)
-        products = Product.objects.all().order_by('-id')
+        products = Product.objects.all().order_by('id')
         serializer = ProductSerializer(products, many=True)
 
         self.assertEqual(response.data, serializer.data)
@@ -158,7 +158,6 @@ class ProductDetailAPITests(TestCase):
         '''
         product = sample_product(user=self.user)
         Offer.objects.create(
-            user=self.user,
             product=product,
             price=10,
             items_in_stock=2

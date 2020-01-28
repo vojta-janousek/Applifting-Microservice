@@ -10,7 +10,7 @@ class OfferSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Offer
-        fields = ('id', 'price', 'items_in_stock', 'found_at')
+        fields = ('id', 'price', 'items_in_stock')
         read_only_fields = ('id',)
 
 

@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-size: 17px;
+  color: black;
+  line-height: 1.6;
+}
+
+#showcase {
+  background-image: url('../images/landing.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+#showcase h1 {
+  font-size: 50px;
+}
+
+#showcase p {
+  font-size: 20px;
+}
+
+#fancy-font {
+  font-family: 'ZCOOL XiaoWei', serif;
+}
+
+#content-links a {
+  font-size: 20px;
+  color: white;
+}
+
+th {
+  border: 5px;
+  padding: 15px;
+}

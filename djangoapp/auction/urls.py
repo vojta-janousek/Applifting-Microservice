@@ -9,7 +9,6 @@ router = DefaultRouter()
 router.register('product', ProductViewSet)
 
 app_name = 'auction'
-
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]

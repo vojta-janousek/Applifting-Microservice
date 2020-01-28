@@ -23,7 +23,6 @@ class ModelTests(TestCase):
             name='Frozen yoghurt'
         )
         offer = Offer.objects.create(
-            user=user,
             product=product,
             price='50',
             items_in_stock='10'

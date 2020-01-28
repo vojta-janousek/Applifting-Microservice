@@ -7,7 +7,7 @@ from decouple import config
 
 # Token acquisition
 
-base_url = 'https://applifting-python-excercise-ms.herokuapp.com/api/v1'
+base_url = config('OFFERS_URL')
 auth_endpoint = '/auth'
 auth_url = base_url + auth_endpoint
 
@@ -38,7 +38,7 @@ headers = {
 
 # Retrieve all offers for a single product
 
-offers_url = base_url + '/products/206/offers'
+offers_url = base_url + '/products/1/offers'
 # offer_request = requests.get(url=offers_url, headers=headers)
 
 def compare_ids(url, headers):

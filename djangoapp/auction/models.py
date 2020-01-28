@@ -1,9 +1,9 @@
 from django.db import models
 from django.conf import settings
 
-from django.db.models.signals import post_save
-
-from auction.signals import register_product
+# from django.db.models.signals import post_save
+#
+# from auction.signals import register_product
 
 
 class Product(models.Model):
@@ -30,7 +30,6 @@ class Offer(models.Model):
         related_name='offers',
         on_delete=models.CASCADE
     )
-    service_id = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
     items_in_stock = models.PositiveIntegerField()
 

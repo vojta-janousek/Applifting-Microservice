@@ -2,135 +2,187 @@
 
 IMPORTANT:
 
-- Endpoint documentation is in the ENDPOINTS.md file
+- To use the service, first create an account via an endpoint (see the list
+  of endpoints below) or browseable API, then log in.
+  You can list all your products, view a detail of a single product,
+  or create a new product. Creating a new product will register it
+  with the Offers microservice, and refresh its offers every minute.
+
+  You cannot view any data created/registered by other users.
+
 - Environment variables are hidden and ignored by git
-- Application uses PostgreSQL
-- You can use the following command to run unit tests on core app (or replace with auction):
+- Application integrates Django, PostgreSQL, Celery and Redis via Docker
+- You can use the following command to run unit tests on chosen <app>:
 
-docker-compose run djangoapp sh -c "python djangoapp/manage.py test core && flake8"
+docker-compose run djangoapp sh -c "python djangoapp/manage.py test <app> && flake8"
 
-However, you need to comment out the last line in settings.py (heroku settings)
+However, you might need to comment out the last line in settings.py (heroku settings)
+
+Currently not working:
+- Celery beat (background jobs not functional)
+- Not fully deployed to Heroku yet
 
 
-Thursday: Project setup
 
-- Created and initialised a GitHub repository
-- Created and configured a Dockerfile
-- Created a requirements.txt file
-- Created a docker-compose.yml configuration
-- Built a Docker image
+Offers microservice
 
-- Created a .travis.yml file
-- Activated Travis on the GitHub repository
-- Created a .flake8 file for linting exclusions
-- Created a Procfile for future Heroku deployment
+Base URL: Hidden (Environment variable)
 
-- Created a Django project
-- Configured the .gitignore file
-- Created a settings.ini file with environment variables
+Auction microservice
 
-- Created app called 'auction'
-- Changed database from sqlite to postgresql
-- Configured project settings
-- Made migrations to the new database
+Base URL (Browseable API): http://www.product-api.me
 
-Friday: Database configuration and creating a custom user model
 
-1) Database configuration
+ENDPOINTS:
 
-- Created app called 'core'
-- Added a test for wait_for_db functionality (core)
-- Implemented wait_for_db functionality (core)
+POST /api/user/create/
 
-2) Custom user model (core)
+Request:
+{
+  'email': <email>,
+  'password': <password>,
+  'name': <name>
+}
+Response:
+201 CREATED
+{
+  'email': <email>,
+  'name': <name>'
+}
+400 BAD REQUEST
+{
+  'email': <message>,
+  'password': <message>,
+  'name': <message>
+}
 
-- Added a test for a custom user model being created
-- Created a custom user model and a custom user manager
-- Added a test for email normalization
-- Implemented email normalization feature
-- Added a test for email field validation
-- Implemented email field validation feature
-- Added a test for a custom superuser being created
-- Implemented a method for creating superusers
-- Added tests for listing, creating and changing users in the admin interface
-- Implemented the above features
+POST /api/auction/product/
 
-Saturday: Models, Serialized CRUD Model-Template-View paradigm, User management endpoints
+Authorization: <credentials>
+Request:
+{
+  'name': <name>,
+  'description': <description>
+}
+Response:
+201 CREATED
+{
+  'id': <id>,
+  'name': <name>,
+  'description': <description>,
+  'offers': []
+}
+400 BAD REQUEST
+{
+  'name': [<message>]
+}
+403 FORBIDDEN
+{
+  'detail': 'Invalid username/password.'
+}
 
-1) Model creation (auction)
+GET /api/auction/product/
 
-- Added tests for the models' string representation
-- Created Product and Offer models
-- Migrated both models and registered them to the admin interface
+Authorization: <credentials>
+Request: None
+Response:
+200 OK
+[
+  {
+    'id': <id>,
+    'name': <name>,
+    'description': <description>,
+    'offers': [
+      '<offer.name>: $<offer.price> (<offer.items_in_stock> in stock)',
+      .
+      .
+      .
+    ]
+  },
+  .
+  .
+  .
+]
+403 FORBIDDEN
+{
+  'detail': 'Invalid username/password.'
+}
 
-2) Product creating and retrieving (auction)
+GET /api/auction/product/<id>/
 
-- Added tests for retrieving products by authorized and unauthorized users
-- Created a product serializer
-- Created a product list view and registered it to the url router
+Authorization: <credentials>
+Request: None
+Response:
+200 OK
+{
+  'id': <product.id>,
+  'name': <product.name>,
+  'description': <product.description>,
+  'offers': [
+    {
+      'id': <offer.id>,
+      'price': <offer.price>,
+      'items_in_stock': <offer.items_in_stock>
+    },
+    .
+    .
+    .
+  ]
+}
+403 FORBIDDEN
+{
+  'detail': 'Invalid username/password.'
+}
+404 NOT FOUND
+{
+  'detail': 'Not found.'
+}
 
-- Added a test for checking that products are limited to their users
-- Configured querysets to filter products by their user
+PUT/PATCH /api/auction/product/<id>/
+Authorization: <credentials>
+Request:
+{
+  'name': <new_name>,
+  'description': <new_description>
+}
+Response:
+200 OK
+{
+  'id': <product.id>,
+  'name': <product.new_name>,
+  'description': <product.new_description>,
+  'offers': [
+    {
+      'id': <offer.id>,
+      'price': <offer.price>,
+      'items_in_stock': <offer.items_in_stock>
+    },
+    .
+    .
+    .
+  ]
+}
+400 BAD REQUEST
+{
+  'name': [<message>]
+}
+403 FORBIDDEN
+{
+  'detail': 'Invalid username/password.'
+}
+404 NOT FOUND
+{
+  'detail': 'Not found.'
+}
 
-- Added tests for creating a new product with valid and invalid payloads
-- Configured product view to include create model feature
+DELETE /api/auction/product/<id>/
+204 NO CONTENT
 
-- Created tests for displaying a product detail
-- Configured serialized CRUD functionality for product model
-
-- Configured CRUD endpoints via Router
-
-3) User management endpoints (user)
-
-- Created app called 'user'
-- Added tests for successfully creating a new user
-- Added a test creating an existing user to fail
-- Added a test checking if the selected password is longer than 5 characters
-- Created user model serializer and serialized view
-- Assigned url to the view
-
-- Added a test to make sure users always have to be authenticated
-- Added a test to make sure a profile can be retrieved
-- Added a test to make sure post request is not allowed on this urls
-- Added tests to make sure users can update their profiles
-- Created a view for authenticated user management and assigned a url to it
-
-Sunday: Microservice integration analysis
-
-1) Sending requests to Products microservice (auction/requests)
-
-- Added requests package to requirements.txt
-- Added login/logout feature to the browseable API
-- Tested requests for user creation/authentication
-- Tested requests for product CRUD
-
-2) Sending requests to Offers microservice (auction/requests)
-
-- Requested an access token and saved it as an environment variable
-- Registered a test product
-- Tested retrieving all offers for the registered product
-- Tested the number of mutual offers in consecutive get requests
-
-Monday: Background job deployment debugging
-
-1) Offer model changes (auction)
-
-- Fixed Offer model to work with incoming data
-- Added tests for the new Offer model
-
-2) Microservice integration
-
-- Created a signal that registers a new product that has been created
-- Tested the signal
-
-- Added Celery and Redis to requirements.txt
-- Built images for both, linked them together, along with db
-- Configured project for Celery, created test tasks
-
-Tuesday:
-
-X) Deployment to Heroku
-
-- Hid the database password
-- Created a Heroku project
-- Found, bought and registered a custom domain to the Heroku project
+403 FORBIDDEN
+{
+  'detail': 'Invalid username/password.'
+}
+404 NOT FOUND
+{
+  'detail': 'Not found.'
+}
