@@ -27,7 +27,10 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 TOKEN = config('ACCESS_TOKEN')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'evening-brook-74821.herokuapp.com',
+    'www.product-api.me'
+]
 
 
 # Application definition
@@ -50,8 +53,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,15 +87,27 @@ WSGI_APPLICATION = 'djangoapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
+if not DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.environ.get('DB_HOST'),
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASS'),
+        }
     }
-}
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         }
+#     }
+#
+#     DATABASES['default'] = dj_database_url.config(default="postgres://zgbumerndkojip:a8482ca154b39989069eeacbf5c8f679db1fb3fd8d819edab8420a2c73d4fdf6@ec2-184-73-216-48.compute-1.amazonaws.com:5432/d7dcu138dsvmg0")
+#
+#     db_from_env = dj_database_url.config(conn_max_age=600)
+#     DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -167,10 +182,7 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 
-if DEBUG:
-    pass
-
-else:
+if not DEBUG:
     import django_heroku
     import dj_database_url
 
