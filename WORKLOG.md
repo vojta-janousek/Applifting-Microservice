@@ -120,8 +120,20 @@
 - Added a landing page
 - Ran all tests
 
-13) Deployment to Heroku
+13) Docker and friends
+
+- Debugging
+- Managed to make Redis work with Celery
+- More debugging
+- Managed to make Celery Beat work, but only when the tasks are not using a db
+- Yet more debugging
+
+14) Deployment to Heroku
 
 - Hid the database password
 - Created a Heroku project
 - Found, bought and registered a custom domain to the Heroku project
+- Imported packages for deployment
+- Configured whitenoise
+- Configured Procfile
+- 

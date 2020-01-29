@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-# import django_heroku
 
 from decouple import config
 
@@ -52,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -141,20 +141,17 @@ STATICFILES_DIRS = [
 
 AUTH_USER_MODEL = 'core.User'
 
-# django_heroku.settings(locals())
-
-
-
-
 # CELERY_CACHE_BACKEND = 'django-cache'
 
 from celery.schedules import crontab
 
 
+CELERY_IMPORTS = ('auction.tasks', )
+
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_BACKEND_URL = 'redis://redis:6379/1'
 CELERY_BROKER_TRANSPORT = 'redis'
-CELERY_RESULT_BACKEND = 'redis'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
@@ -163,12 +160,19 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Prague'
 
 CELERY_BEAT_SCHEDULE = {
-    'send-test-every-minute': {
-        'task': 'send_import_summary',
-        'schedule': 30.0,
-    },
-    'debug': {
-        'task': 'debug_task',
-        'schedule': 10.0,
+    'send-update-every-minute': {
+        'task': 'product_update',
+        'schedule': 60.0,
     },
 }
+
+
+if DEBUG:
+    pass
+
+else:
+    import django_heroku
+    import dj_database_url
+
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    django_heroku.settings(locals())

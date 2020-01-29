@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from auction.models import Product, Offer
+from auction.models import Product, Offer, Buffer
 
 
 class OfferSerializer(serializers.ModelSerializer):
@@ -43,3 +43,10 @@ class ProductDetailSerializer(ProductSerializer):
     A serializer for product object details.
     '''
     offers = OfferSerializer(many=True, read_only=True)
+
+
+class BufferSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Buffer
+        fields = ('value',)

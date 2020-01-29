@@ -1,10 +1,15 @@
 from django.views.generic import TemplateView
 
 from rest_framework import viewsets
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
 
-from auction.models import Product
-from auction.serializers import ProductSerializer, ProductDetailSerializer
+from auction.models import Product, Buffer
+from auction.serializers import (ProductSerializer, ProductDetailSerializer,
+                                 BufferSerializer)
 
 
 class IndexView(TemplateView):
@@ -40,20 +45,22 @@ class ProductViewSet(viewsets.ModelViewSet):
         '''
         serializer.save(user=self.request.user)
 
-# class ProductViewSet(viewsets.GenericViewSet,
-#                      mixins.ListModelMixin,
-#                      mixins.CreateModelMixin):
-#     '''
-#     Manage products in the database.
-#     '''
-#     # authentication_classes = (TokenAuthentication,)
-#     permission_classes = (IsAuthenticated,)
-#
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#
-#     def get_queryset(self):
-#         return self.queryset.filter(user=self.request.user).order_by('id')
-#
-#     def perform_create(self, serializer):
-#         serializer.save(user=self.request.user)
+
+class BufferDetailAPIView(APIView):
+
+    def get_object(self, pk):
+        buffer = get_object_or_404(Buffer, pk=pk)
+        return buffer
+
+    def get(self, request, pk):
+        buffer = self.get_object(pk)
+        serializer = BufferSerializer(buffer)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        buffer = self.get_object(pk)
+        serializer = BufferSerializer(buffer, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)

@@ -15,5 +15,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN apk del .tmp-build-deps
 
+EXPOSE 8000
+
 RUN adduser -D user
 USER user
