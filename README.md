@@ -19,8 +19,7 @@ docker-compose run djangoapp sh -c "python djangoapp/manage.py test <app> && fla
 However, you might need to comment out the last line in settings.py (heroku settings)
 
 Currently not working:
-- Celery beat (background jobs not functional)
-- Not fully deployed to Heroku yet
+- Celery beat with Postgres (background jobs not functional)
 
 
 
