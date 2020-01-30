@@ -138,3 +138,11 @@
 - Configured Procfile
 - Deployed web to Heroku
 - Made migrations, created superuser
+
+15) Ditching celery
+
+- Imported django-background-tasks module
+- Created a background task with a module decorator
+- Triggered a repeated task with the workaround method
+- Ran the task periodically on a server
+- Tested and verified the outcome
