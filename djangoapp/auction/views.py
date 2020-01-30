@@ -10,6 +10,7 @@ from rest_framework.generics import get_object_or_404
 from auction.models import Product, Buffer
 from auction.serializers import (ProductSerializer, ProductDetailSerializer,
                                  BufferSerializer)
+from auction.tasks import update_all_products
 
 
 class IndexView(TemplateView):
@@ -62,5 +63,6 @@ class BufferDetailAPIView(APIView):
         serializer = BufferSerializer(buffer, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            update_all_products(schedule=5, repeat=60)
             return Response(serializer.data)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)

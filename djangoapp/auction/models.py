@@ -2,14 +2,11 @@ import requests
 import json
 
 from decimal import Decimal
-
-
 from decouple import config
 
 from django.db import models
 from django.conf import settings
-
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 
 from auction.signals import register_product
 
@@ -145,7 +142,4 @@ def update_single_products_offers(product_id):
             )
 
 
-if not config('DEBUG'):
-    post_save.connect(register_product, sender=Product)
-else:
-    pre_save.connect(update_offers, sender=Buffer)
+post_save.connect(register_product, sender=Product)

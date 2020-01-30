@@ -3,15 +3,16 @@ from __future__ import absolute_import, unicode_literals
 import requests
 import json
 
-from celery import shared_task
+# from celery import shared_task
 from decouple import config
 from decimal import Decimal
+from background_task import background
 
 from auction.models import Product, Offer
 
 
-@shared_task(name='product_update')
-def update_product_offers():
+@background(schedule=5)
+def update_all_products():
     '''
     Updates all products with new offers.
     '''
