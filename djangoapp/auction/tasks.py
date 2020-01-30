@@ -13,12 +13,17 @@ from auction.models import Product, Offer
 @shared_task(name='product_update')
 def update_product_offers():
     '''
+    Updates all products with new offers.
+    '''
+    for product in Product.objects.all():
+        update_single_product(product.id)
+
+
+def update_single_product(product_id):
+    '''
     Pulls new offers for a product from the Offers microservice,
     then updates the offers in the database.
     '''
-    # Test
-    product_id = 1
-    # Actual
     # for product in Product.objects.all():
     #     product_id = product.id
 
