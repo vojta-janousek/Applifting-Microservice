@@ -136,4 +136,5 @@
 - Imported packages for deployment
 - Configured whitenoise
 - Configured Procfile
-- 
+- Deployed web to Heroku
+- Made migrations, created superuser

@@ -123,12 +123,12 @@ def update_single_products_offers(product_id):
             if (new_average_price > 0):
                 Product.objects.filter(id=product_id).update(
                     current_average_price=new_average_price,
-                    price_percentage_change=Decimal('100.00')
+                    price_percentage_change=Decimal('1.00')
                 )
             elif (new_average_price < 0):
                 Product.objects.filter(id=product_id).update(
                     current_average_price=new_average_price,
-                    price_percentage_change=Decimal('-100.00')
+                    price_percentage_change=Decimal('-1.00')
                 )
             else:
                 Product.objects.filter(id=product_id).update(

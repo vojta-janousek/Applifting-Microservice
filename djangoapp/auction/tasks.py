@@ -16,7 +16,11 @@ def update_product_offers():
     Pulls new offers for a product from the Offers microservice,
     then updates the offers in the database.
     '''
+    # Test
     product_id = 1
+    # Actual
+    # for product in Product.objects.all():
+    #     product_id = product.id
 
     base_url = config('OFFERS_URL')
     offers_url = base_url + '/products/{}/offers'.format(str(product_id))
@@ -65,12 +69,12 @@ def update_product_offers():
             if (new_average_price > 0):
                 Product.objects.filter(id=product_id).update(
                     current_average_price=new_average_price,
-                    price_percentage_change=Decimal('100.00')
+                    price_percentage_change=Decimal('1.00')
                 )
             elif (new_average_price < 0):
                 Product.objects.filter(id=product_id).update(
                     current_average_price=new_average_price,
-                    price_percentage_change=Decimal('-100.00')
+                    price_percentage_change=Decimal('-1.00')
                 )
             else:
                 Product.objects.filter(id=product_id).update(

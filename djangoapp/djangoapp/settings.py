@@ -27,10 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 TOKEN = config('ACCESS_TOKEN')
 
-ALLOWED_HOSTS = [
-    'evening-brook-74821.herokuapp.com',
-    'www.product-api.me'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -53,7 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -159,13 +156,15 @@ AUTH_USER_MODEL = 'core.User'
 # CELERY_CACHE_BACKEND = 'django-cache'
 
 from celery.schedules import crontab
+from datetime import timedelta
 
 
 CELERY_IMPORTS = ('auction.tasks', )
 
 CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_BACKEND_URL = 'redis://redis:6379/1'
 CELERY_BROKER_TRANSPORT = 'redis'
+
+CELERY_BACKEND_URL = 'redis://redis:6379/1'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -174,10 +173,11 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 CELERY_TIMEZONE = 'Europe/Prague'
 
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 CELERY_BEAT_SCHEDULE = {
     'send-update-every-minute': {
         'task': 'product_update',
-        'schedule': 60.0,
+        'schedule': timedelta(seconds=60.0),
     },
 }
 
